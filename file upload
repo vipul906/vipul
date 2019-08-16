@@ -1,0 +1,20 @@
+<?php
+$target_dir = "Expected_FS_Files/";
+$target_file = $target_dir . basename($_FILES["file"]["name"]);
+
+echo $_FILES['file']['error'];
+    if ( 0 < $_FILES['file']['error'] ) {
+        echo 'Error: ' . $_FILES['file']['error'] . '<br>';
+    }
+    else {
+            //$temp = explode(".", $_FILES["file"]["name"]);
+            //#$newfilename= 'Expected_FS_July_2019'.'.'.end($temp);
+            //#move_uploaded_file($_FILES["file"]["tmp_name"], "Expected_FS_Files/" . $newfilename);
+            move_uploaded_file($_FILES["file"]["tmp_name"], "Expected_FS_Files/" . $_FILES["file"]["name"]);
+            echo "<>file upload<>";
+            echo $_FILES['file']['name'];
+            //echo $_FILES["file"];
+
+    }
+
+?>
