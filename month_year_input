@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://www.eyecon.ro/bootstrap-datepicker/css/bootstrap.css" rel="stylesheet">
+    <link href="https://www.eyecon.ro/bootstrap-datepicker/css/datepicker.css" rel="stylesheet">
+    <link href="https://www.eyecon.ro/bootstrap-datepicker/js/google-code-prettify/prettify.css" rel="stylesheet">
+  </head>
+        <script src="https://www.eyecon.ro/bootstrap-datepicker/js/google-code-prettify/prettify.js"></script>
+<script src="https://www.eyecon.ro/bootstrap-datepicker/js/jquery.js"></script>
+<script src="https://www.eyecon.ro/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
+    <script>
+        function today_date(){
+             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];;
+             var date = new Date();
+             return (date.getMonth()+1) + '/' + date.getFullYear();
+
+}
+        function uploadfilee(){
+                                var file = $("#filetoupload")[0].files[0];
+                                var form_data = new FormData();
+                                var dat=$(".span2").val();
+                                form_data.append('file',file);                               
+                                $.ajax({
+                                    url   : "upload.php",
+                                    type  : "POST",
+                                    data  : form_data,
+                                    cache : false,
+                                    contentType:false,
+                                    processData:false,  
+                                    success : function (response){
+                                                                    console.log(response);
+                                                                    var file_name = file.name;
+                                                                    console.log(file_name);
+                                                                    $.ajax({
+                                                                          url :"../../cgi-bin/vipul/tas_18_7.py",
+                                                                          type : "POST",
+                                                                          data :{"file_name":file_name,"dat":dat},
+                                                                          success : function(result){
+                                                                                                     console.log(result);
+                                                                                                        alert(result);
+                                                                                                },
+                                                                            });
+                                                              },
+                                    });                                                                   
+
+            }
+        
+        function download_file(){
+                    var dat=$(".span2").val();
+                    console.log(dat);
+                    if(dat){
+                     $.ajax({
+                                url :"../../cgi-bin/vipul/tas_18_7.py",
+                                type : "POST",
+                                data :{"download":"find","dat":dat},
+                                success : function(result){
+                                                    alert(result);
+                                                         },
+                                });  
+}
+else alert("select date");
+}
+
+        $(function(){
+            window.prettyPrint && prettyPrint();
+           $('#dpMonths').datepicker();
+});
+        
+   </script>
+
+
+    <body>
+         <div class="well">
+              <div class="input-append date" id="dpMonths" data-date="today_date()" data-date-format="mm/yyyy" data-date-viewmode="months" data-date-minviewmode="months">
+                <input class="span2" size="36" type="text" readonly >
+                <span class="add-on"><i class="icon-calendar"></i></span>
+                <input type = "file" name = "filetoupload" id = "filetoupload">
+                <input type="submit" value="Upload File" id="submit" onclick="uploadfilee()">
+                <input type="submit" value="download_File" id="download_File" onclick="download_file()">
+        </div>
+       </div> 
+   </body>
+    </html>
