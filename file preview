@@ -21,7 +21,7 @@ body {
   right: 0;
 }
 </style>
-  <html lang="en">
+  <html lang = "en">
     <head>
         <title>JavaScript PDF Viewer Demo</title>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
