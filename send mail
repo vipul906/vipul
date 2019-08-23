@@ -1,4 +1,11 @@
-    def send_mail(self):
+#! /usr/bin/python
+print "Access-Control-Allow-Origin: *"
+print "Content-type:text/html\r\n\r\n"
+import email, smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+  def send_mail(self):
         subject = "File name with its path"
         body=''
         for i in self.url_li:
