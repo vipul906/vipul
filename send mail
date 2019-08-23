@@ -1,0 +1,20 @@
+    def send_mail(self):
+        subject = "File name with its path"
+        body=''
+        for i in self.url_li:
+            path = ["http://192.168.1.154/vipul/C1Q_PDF/%s"%i]
+            body+='\n'.join(path)
+        sender_email = "vipul.j@tas.in"
+        receiver_email = sender_email#"sengotian.m@tas.in"
+        message = MIMEMultipart()
+        message["From"] = sender_email
+        message["To"] = receiver_email
+        message["Subject"] = subject
+        message.attach(MIMEText(body, "plain"))
+        text = message.as_string()
+        s=smtplib.SMTP('smtp.mailhostbox.com',25)
+        s.starttls()
+        s.login('vipul.j@tas.in','sehuljain906')
+        s.sendmail('vipul.j@tas.in',receiver_email,text)
+        s.quit()
+
