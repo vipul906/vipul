@@ -1,0 +1,3 @@
+general form :
+              sshpass -p password cmd
+ example  : sshpass -p "password" scp -r "FILENAME with path" root@172.16.20.7:"destination path"
