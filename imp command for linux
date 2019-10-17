@@ -1,0 +1,10 @@
+############ COPY COMMAND###########
+general form :
+              sshpass -p password cmd
+ example  : sshpass -p "password" scp -r "FILENAME with path" root@172.16.20.7:"destination path"
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+################# SEE RUNNING FILE##########
+                               ps aux | grep "file_NAME"
+                               
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$
