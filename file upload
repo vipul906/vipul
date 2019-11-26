@@ -1,3 +1,21 @@
+                ###############IN HTML FILE UPLOAD BY USER#####################
+
+var form_data = new FormData();
+form_data.append('upload', $('#upload_file')[0].files[0]);
+$.ajax({
+    type: 'POST',
+    url: "../../../cgi-bin/narendra/upload.py", 
+    data:  form_data,
+    processData: false,
+    contentType: false, 
+    success: function(result){
+        CONSOLE.LOG(result);
+    }
+});
+
+        $$$$$$$$ WE CAN SEND FILE AND ITS DATA IN FORMDATA TO BACKEND FOR READING AND COPY TO ANOTHER FILE $$$$$$$
+
+                ########### IN PHP FILE UPLOAD IN LOCAL FOLDER###################
 <?php
 $target_dir = "Expected_FS_Files/";
 $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -7,14 +25,39 @@ echo $_FILES['file']['error'];
         echo 'Error: ' . $_FILES['file']['error'] . '<br>';
     }
     else {
-            //$temp = explode(".", $_FILES["file"]["name"]);
-            //#$newfilename= 'Expected_FS_July_2019'.'.'.end($temp);
-            //#move_uploaded_file($_FILES["file"]["tmp_name"], "Expected_FS_Files/" . $newfilename);
-            move_uploaded_file($_FILES["file"]["tmp_name"], "Expected_FS_Files/" . $_FILES["file"]["name"]);
-            echo "<>file upload<>";
-            echo $_FILES['file']['name'];
-            //echo $_FILES["file"];
-
+        //$temp = explode(".", $_FILES["file"]["name"]);
+        //#$newfilename= 'Expected_FS_July_2019'.'.'.end($temp);
+        //#move_uploaded_file($_FILES["file"]["tmp_name"], "Expected_FS_Files/" . $newfilename);
+        move_uploaded_file($_FILES["file"]["tmp_name"], "Expected_FS_Files/" . $_FILES["file"]["name"]);
+        echo "<>file upload<>";
+        echo $_FILES['file']['name'];
+        //echo $_FILES["file"];
     }
-
 ?>
+                 #################IN PYTHON FILE ###############
+#!/usr/bin/python       
+# -*- coding:utf-8 -*-
+
+import os
+import cgi, cgitb, json
+from PyPDF2 import PdfFileReader
+cgitb.enable()
+
+print "Acces-Control-Allow-Origin: *"
+print "Content-type:text/html\n\r\n"
+
+form = cgi.FieldStorage()
+
+if (form.has_key("upload")):
+    filedata = form['upload']
+    path = "/var/www/html/narendra/highlight/uploaded_pdfs/"
+    if filedata.file:
+       filename = filedata.filename
+       file_path = path+filename
+       with file(file_path, 'wb') as outfile:
+            outfile.write(filedata.file.read())
+       cmd = 'chmod 777 "%s"'%(file_path)           ####### giving APPACHE PERMISSIONN SO THAT IT IS SEND TO INTFACE FOR PERFORMING ACTION
+       os.system(cmd)                   #### EXECUTING LINUX CMD IN WINDOW
+       pdf = PdfFileReader(file_path)   
+       l = pdf.getNumPages()          ####### FOR COUNTING TOTAL PAGE IN PDF
+       print json.dumps(l)
